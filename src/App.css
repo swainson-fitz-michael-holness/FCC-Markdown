@@ -2,10 +2,9 @@ body {
   font-family: Roboto;
 }
 
-p {
-  /* margin: 0; */
-  margin: 0;
-}
+/* p {
+
+} */
 
 path {
   pointer-events: none;
@@ -20,17 +19,31 @@ path {
 
 #editor {
   min-height: 40vh;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
   border: none;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  padding: 30px;
+  border-radius:0px 0px 10px 10px;
+  -moz-border-radius:0px 0px 10px 10px;
+  -webkit-border-radius:0px 0px 10px 10px;
+  padding: 10px 30px 0px 30px;
   color: #526d83;
   resize: none;
   -webkit-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
   -moz-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
   box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
+
+  margin: 0px;
+  overflow: auto;
+
+
 }
+
+/* .edit-holder {
+  display: relative;
+} */
+
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -46,7 +59,7 @@ table, th, td {
 
 .preview-container {
   /* display: relative; */
-  /* min-height: 40vh; */
+  min-height: 40vh;
   max-height: calc(40vh);
   border: none;
   border-radius:0px 0px 10px 10px;
@@ -64,7 +77,8 @@ table, th, td {
 }
 
 #preview {
-  margin: 60px 30px 30px 30px;
+  margin: 10px 30px 30px 30px;
+  min-height: 100px;
 }
 
 .toolbar {
@@ -78,6 +92,15 @@ table, th, td {
   /* overflow: hidden; */
   /* top: 0; */
   /* left: 0; */
+}
+
+.toolbar-edit {
+  height: 48px;
+  background-color: bisque;
+  border-radius:10px 10px 0px 0px;
+  -moz-border-radius:10px 0px 0px 0px;
+  -webkit-border-radius:10px 10px 0px 0px;
+  /* margin-top: 20px; */
 }
 
 button {
@@ -114,7 +137,12 @@ button {
   } */
   .toolbar {
     margin: 0px;
+    
   }
+
+  .toolbar-edit {
+    margin-right: 30px;
+  } 
 
   .app {
     flex-direction: row;
@@ -127,7 +155,13 @@ button {
     min-height: 85vh;
     width: 40vw;
     margin-right: 30px;
-    padding: 20px;
+    max-height: calc(85vh - 48px);
+    min-height: calc(85vh - 37px);
+    padding: 10px 20px 20px 20px;
+
+    box-sizing: initial;
+    -moz-box-sizing: initial;
+    -webkit-box-sizing: initial; 
   }
 
   .preview-container {
@@ -137,6 +171,10 @@ button {
     width: 40vw;
     padding: 0px 20px 20px 20px;
     
+  }
+
+  #preview {
+    margin: 10px 0px 0px 0px;
   }
   
 

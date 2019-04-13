@@ -19,13 +19,13 @@ import Strikethrough from './img/strikethrough.svg';
 import hljs from 'highlight.js';
 // import hljs from 'highlight.js/lib/highlight';
 import 'highlight.js/styles/github.css';
-var turndownPluginGfm = require('turndown-plugin-gfm');
+// var turndownPluginGfm = require('turndown-plugin-gfm');
 
 // hljs.configure({ useBR: true });
 
 //to change from markdown to html
 const turndownService = new turndown();
-turndownService.use(turndownPluginGfm.gfm);
+// turndownService.use(turndownPluginGfm.gfm);
 turndownService.addRule('div', {
     filter: 'div',
     replacement: function (content) {
@@ -103,16 +103,16 @@ function editSelection(edit, callback) {
 
 // customize html output from markdown input
 marked.setOptions({
-    // sanitize: true,
-    // headerIds: false,
+    sanitize: true,
+    headerIds: false,
     breaks: true,
-    // gfm: true
+    gfm: true
 });
 
-const renderer = new marked.Renderer();
-renderer.link = function (href, title, text) {
-    return `<a target="_blank" href="${href}">${text}` + '</a>';
-}
+// const renderer = new marked.Renderer();
+// renderer.link = function (href, title, text) {
+//     return `<a target="_blank" href="${href}">${text}` + '</a>';
+// }
 
 // Component body
 class App extends Component {
@@ -199,8 +199,8 @@ class App extends Component {
         // hljs.initHighlighting();
 
         this.setState({
-            // html: marked(event.target.value).replace(/ /g, '&nbsp;'),
-            html: marked(event.target.value),
+            html: marked(event.target.value).replace(/ /g, '&nbsp;'),
+            // html: marked(event.target.value),
         }, () => {
             hljs.initHighlighting.called = false;
             hljs.initHighlighting();
@@ -229,9 +229,9 @@ class App extends Component {
         }
     }
 
-    test = (event) => {
-        console.log(event.target)
-    }
+    // test = (event) => {
+    //     console.log(event.target)
+    // }
 
     render() {
 
@@ -242,10 +242,21 @@ class App extends Component {
         return (
             <div className='window' onClick={this.test}  >
                 <div className='app' >
+                    <div className='edit-holder'>
+                        <div className='toolbar-edit'>
+                            {/* <p>Source code</p> */}
+                        </div>
+
+                        <div className="edit-container">
+
+                        </div>
+
+                    </div>
                     <textarea id="editor"
                         defaultValue={turndownService.turndown(this.state.html)}
                         onChange={this.handleEditor}
                     ></textarea>
+
 
                     <div className='preview-holder'>
                         <div className='toolbar'>
@@ -277,9 +288,9 @@ class App extends Component {
                                 onPaste={this.handlePaste}
 
                             />
-                            <div>
+                            {/* <div>
                                 {this.state.html}
-                            </div>
+                            </div> */}
                             {/* <Mapping /> */}
 
                         </div>
