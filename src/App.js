@@ -19,13 +19,13 @@ import Strikethrough from './img/strikethrough.svg';
 import hljs from 'highlight.js';
 // import hljs from 'highlight.js/lib/highlight';
 import 'highlight.js/styles/github.css';
-// var turndownPluginGfm = require('turndown-plugin-gfm');
+var turndownPluginGfm = require('turndown-plugin-gfm');
 
 // hljs.configure({ useBR: true });
 
 //to change from markdown to html
 const turndownService = new turndown();
-// turndownService.use(turndownPluginGfm.gfm);
+turndownService.use(turndownPluginGfm.gfm);
 turndownService.addRule('div', {
     filter: 'div',
     replacement: function (content) {
@@ -103,7 +103,7 @@ function editSelection(edit, callback) {
 
 // customize html output from markdown input
 marked.setOptions({
-    sanitize: true,
+    // sanitize: true,
     headerIds: false,
     breaks: true,
     gfm: true
@@ -199,8 +199,8 @@ class App extends Component {
         // hljs.initHighlighting();
 
         this.setState({
-            html: marked(event.target.value).replace(/ /g, '&nbsp;'),
-            // html: marked(event.target.value),
+            // html: marked(event.target.value).replace(/ /g, '&nbsp;'),
+            html: marked(event.target.value),
         }, () => {
             hljs.initHighlighting.called = false;
             hljs.initHighlighting();
@@ -248,14 +248,14 @@ class App extends Component {
                         </div>
 
                         <div className="edit-container">
-
+                            <textarea id="editor"
+                                defaultValue={turndownService.turndown(this.state.html)}
+                                onChange={this.handleEditor}
+                            ></textarea>
                         </div>
 
                     </div>
-                    <textarea id="editor"
-                        defaultValue={turndownService.turndown(this.state.html)}
-                        onChange={this.handleEditor}
-                    ></textarea>
+
 
 
                     <div className='preview-holder'>

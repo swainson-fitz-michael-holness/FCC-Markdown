@@ -28,7 +28,7 @@ path {
   -moz-border-radius:0px 0px 10px 10px;
   -webkit-border-radius:0px 0px 10px 10px;
   padding: 10px 30px 0px 30px;
-  color: #526d83;
+  color: #52835e;
   resize: none;
   -webkit-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
   -moz-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
@@ -66,7 +66,7 @@ table, th, td {
   -moz-border-radius:0px 0px 10px 10px;
   -webkit-border-radius:0px 0px 10px 10px;
   /* padding: 0px 30px 30px 30px; */
-  color: #526d83;
+  color: #6e726e;
   
   -webkit-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
   -moz-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
@@ -83,7 +83,7 @@ table, th, td {
 
 .toolbar {
   /* position: absolute; */
-  background-color: bisque;
+  background-color: rgb(197, 253, 214);
   border-radius:10px 10px 0px 0px;
   -moz-border-radius:10px 0px 0px 0px;
   -webkit-border-radius:10px 10px 0px 0px;
@@ -96,7 +96,7 @@ table, th, td {
 
 .toolbar-edit {
   height: 48px;
-  background-color: bisque;
+  background-color: rgb(197, 253, 214);
   border-radius:10px 10px 0px 0px;
   -moz-border-radius:10px 0px 0px 0px;
   -webkit-border-radius:10px 10px 0px 0px;
