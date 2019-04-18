@@ -1,29 +1,20 @@
 import React, { Component } from 'react';
-
-import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import BoldIcon from '@material-ui/icons/FormatBold';
 import ItalicIcon from '@material-ui/icons/FormatItalic';
 import StrikethroughIcon from '@material-ui/icons/FormatStrikethrough';
-import QuoteIcon from '@material-ui/icons/FormatQuote';
+import Fullscreen from '@material-ui/icons/Fullscreen';
+import FullscreenExit from '@material-ui/icons/FullscreenExit';
 
 import './App.css';
 import marked from 'marked';
-import purify from 'dompurify';
 import ContentEditable from 'react-contenteditable';
 import turndown from 'turndown';
-import Mapping from './Mapping';
-import Bold from './img/bold.svg';
-import Italic from './img/italic.svg';
-import Strikethrough from './img/strikethrough.svg';
 import hljs from 'highlight.js';
-// import hljs from 'highlight.js/lib/highlight';
 import 'highlight.js/styles/github.css';
 var turndownPluginGfm = require('turndown-plugin-gfm');
 
-// hljs.configure({ useBR: true });
-
-//to change from markdown to html
+//change from markdown to html
 const turndownService = new turndown();
 turndownService.use(turndownPluginGfm.gfm);
 turndownService.addRule('div', {
@@ -31,15 +22,34 @@ turndownService.addRule('div', {
     replacement: function (content) {
         return '\n' + content
     }
-})
+});
+
+//load fcc script test
+var loadScript = function (src) {
+    var tag = document.createElement('script');
+    tag.async = false;
+    tag.src = src;
+    document.getElementById('root').appendChild(tag);
+}
+loadScript('https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js')
 
 const placeholder =
-    `# Welcome to my React Markdown Previewer!
+    `# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
 
-## This is a sub-heading...
-### And here's some other cool stuff:
+Alternatively, for H1 and H2, an underline-ish style:
+
+Alt-H1
+======
+
+Alt-H2
+------
   
-Heres some code, \`<div></div>\`, between 2 backticks.
+Inline code, \`<div></div>\`, between 2 back-ticks.
 
 \`\`\`
 // this is multi-line code:
@@ -51,21 +61,23 @@ function anotherExample(firstLine, lastLine) {
 }
 \`\`\`
   
-You can also make text **bold**... whoa!
-Or _italic_.
-Or... wait for it... **_both!_**
-And feel free to go crazy ~~crossing stuff out~~.
+## Emphasis
+Emphasis, aka italics, with *asterisks* or _underscores_.
+Strong emphasis, aka bold, with **asterisks** or __underscores__.
+Combined emphasis with **asterisks and _underscores_**.
+Strikethrough uses two tildes. ~~Scratch this.~~
+- - - -
 
 There's also [links](https://www.freecodecamp.com), and
 > Block Quotes!
 
-And if you want to get really crazy, even tables:
-
+## Tables
 Wild Header | Crazy Header | Another Header?
 ------------ | ------------- | ------------- 
 Your content can | be here, and it | can be here....
 And here. | Okay. | I think we get it.
 
+## Lists
 - And of course there are lists.
   - Some are bulleted.
      - With different indentation levels.
@@ -81,38 +93,19 @@ And here. | Okay. | I think we get it.
 ![React Logo w/ Text](https://goo.gl/Umyytc)
 `
 
-// turndownService.addRule('code', {
-//     filter: 'code',
-//     replacement: function (content) {
-//         return "'''" + content + "'''"
-//     }
-// })
-
 // calls edit buttons like bold and Italic
 function editSelection(edit, callback) {
-    // console.log(edit)
-    // if (edit === 'quote') {
-    //     document.execCommand('FormatBlock', false, '<blockquote>');
-
-    // } else {
-    //     document.execCommand(edit);
-    // }
     document.execCommand(edit);
     callback();
 }
 
 // customize html output from markdown input
 marked.setOptions({
-    // sanitize: true,
+    sanitize: true,
     headerIds: false,
     breaks: true,
     gfm: true
 });
-
-// const renderer = new marked.Renderer();
-// renderer.link = function (href, title, text) {
-//     return `<a target="_blank" href="${href}">${text}` + '</a>';
-// }
 
 // Component body
 class App extends Component {
@@ -125,56 +118,19 @@ class App extends Component {
 
     };
 
-    componentDidUpdate() {
-        // alert(document.getElementById('preview').onfocus)
-    }
 
     // for when user is typing in the WYSIWYG previewer. We detect the return key and overide the default behavior of the browser to input a line break. 
     handleKeyPress = (keyPress) => {
-        // alert(keyPress.keyCode)
         if (keyPress.keyCode === 13) {
-            keyPress.preventDefault(); //UGGHHH!!!! I hate contenteditable 
-            document.execCommand('insertLineBreak', false); //UGH!!! it took me days and 100s of line of code to find this!
+            keyPress.preventDefault();
+            document.execCommand('insertLineBreak', false);
         }
     };
 
+    // for security reason we prevent paste
     handlePaste = (event) => {
-        // var clipboardData;
         event.stopPropagation();
         event.preventDefault();
-        // clipboardData = event.clipboardData || window.clipboardData;
-        // // pasteData = clipboardData.getData('text');
-
-        // // alert('working')
-        // // document.getElementById('preview').insertAdjacentHTML('beforeend', clipboardData.getData('text'))
-
-        // if (!window.getSelection().isCollapsed) {
-
-        //     document.designMode = 'on';
-
-        //     editSelection('paste', () => {
-        //         document.designMode = 'off';
-        //         // document.getElementById('editor').value = turndownService.turndown(document.getElementById('preview').innerHTML);
-        //         // alert('working')
-        //         document.getElementById('preview').insertAdjacentHTML('beforeend', clipboardData.getData('text'))
-
-        //         this.setState({
-        //             html: document.getElementById('preview').innerHTML
-        //         });
-        //     });
-        // }
-
-        // console.log(clipboardData.getData('text'))
-
-        // for security reasons
-        // this.setState({
-        //     html: purify.sanitize(document.getElementById('preview').innerHTML, {
-        //         ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'code', 'ul', 'li', 'strong', 'em', 'ol', 'br', 'div', 'b', 'table', 'thead', 'th', 'tbody', 'tr', 'td', 'img'],
-        //         FORBID_TAGS: ['style'],
-        //         FORBID_ATTR: ['style']
-        //     }).replace(/ /g, '&nbsp;') //to preserve white space in conversion ,
-        // });
-
     }
 
     handleHighlight = () => {
@@ -193,13 +149,9 @@ class App extends Component {
 
     }
 
+    //turns markup into html for preview. inithighlighting renders code syntax highlighting
     handleEditor = (event) => {
-        // console.log(event.target.value)
-        // hljs.initHighlighting.called = false;
-        // hljs.initHighlighting();
-
         this.setState({
-            // html: marked(event.target.value).replace(/ /g, '&nbsp;'),
             html: marked(event.target.value),
         }, () => {
             hljs.initHighlighting.called = false;
@@ -208,14 +160,13 @@ class App extends Component {
 
     }
 
-    //logic for editing docs
+    //logic for editing preview docs
     enableMode = (event) => {
         event.preventDefault();
 
         if (!window.getSelection().isCollapsed || true) {
             const editName = event.target.id;
             document.designMode = 'on';
-            // console.log(event.target.id);
             editSelection(editName, () => {
 
                 document.designMode = 'off';
@@ -229,9 +180,23 @@ class App extends Component {
         }
     }
 
-    // test = (event) => {
-    //     console.log(event.target)
-    // }
+    // make corresponding window fullscreen
+    enableFullscreen = (event) => {
+        // console.log(event.target.id)
+        if (event.target.id === 'fullscreen-preview') {
+            document.getElementById('edit').style = 'display: none';
+            document.getElementById('fullscreen-enter').style = 'display: none';
+            document.getElementById('fullscreen-exit').style = 'display: inline;';
+            document.querySelector('.preview-container').style = 'max-height: calc(80vh); padding: 0px 30px 30px 30px; ';
+
+        } else if (event.target.id === 'fullscreen-exit-previewer') {
+            document.querySelector('.preview-container').style = 'max-height: calc(40vh)';
+            document.getElementById('fullscreen-exit').style = 'display: none';
+            document.getElementById('fullscreen-enter').style = 'display: inline';
+            document.getElementById('edit').style = 'display: block';
+        }
+
+    }
 
     render() {
 
@@ -242,14 +207,22 @@ class App extends Component {
         return (
             <div className='window' onClick={this.test}  >
                 <div className='app' >
-                    <div className='edit-holder'>
+                    <div id='edit' className='edit-holder'>
                         <div className='toolbar-edit'>
-                            {/* <p>Source code</p> */}
+                            <p>Editor</p>
+                            <div className='preview-right-btns'>
+                                <IconButton id='fullscreen-enter' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <Fullscreen id='fullscreen-preview' />
+                                </IconButton>
+                                <IconButton id='fullscreen-exit' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <FullscreenExit id='fullscreen-exit-previewer' />
+                                </IconButton>
+                            </div>
                         </div>
 
                         <div className="edit-container">
                             <textarea id="editor"
-                                defaultValue={turndownService.turndown(this.state.html)}
+                                defaultValue={placeholder}
                                 onChange={this.handleEditor}
                             ></textarea>
                         </div>
@@ -260,6 +233,7 @@ class App extends Component {
 
                     <div className='preview-holder'>
                         <div className='toolbar'>
+
                             <IconButton onClick={this.enableMode} aria-label="bold">
                                 <BoldIcon id='bold' />
                             </IconButton>
@@ -269,17 +243,17 @@ class App extends Component {
                             <IconButton onClick={this.enableMode} aria-label="strikethrough">
                                 <StrikethroughIcon id='strikethrough' />
                             </IconButton>
+
+                            <div className='preview-right-btns'>
+                                <IconButton id='fullscreen-enter' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <Fullscreen id='fullscreen-preview' />
+                                </IconButton>
+                                <IconButton id='fullscreen-exit' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <FullscreenExit id='fullscreen-exit-previewer' />
+                                </IconButton>
+                            </div>
                         </div>
                         <div className='preview-container'>
-
-
-                            {/* <IconButton onClick={this.enableMode} aria-label="quote">
-                            <QuoteIcon id='quote' />
-                        </IconButton> */}
-
-                            {/* <button onClick={this.enableMode}><img id='bold' src={Bold} alt="bold" /></button>
-                        <button onClick={this.enableMode}><img id='italic' src={Italic} alt="italic" /></button>
-                        <button onClick={this.enableMode}><img id='strikethrough' src={Strikethrough} alt="strikethrough" /></button> */}
 
                             <ContentEditable id='preview'
                                 html={this.state.html}
@@ -288,16 +262,10 @@ class App extends Component {
                                 onPaste={this.handlePaste}
 
                             />
-                            {/* <div>
-                                {this.state.html}
-                            </div> */}
-                            {/* <Mapping /> */}
-
                         </div>
                     </div>
-
-
                 </div>
+                <p className='credentials'>Developed by Swainson Holness</p>
             </div >
         );
     }

@@ -2,19 +2,71 @@ body {
   font-family: Roboto;
 }
 
-/* p {
-
-} */
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid rgb(117, 168, 137);
+  margin: 2.9em 10px;
+  padding: 0.5em 10px;
+}
+blockquote:before {
+  color: rgb(62, 145, 97);
+  /* content: open-quote; */
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
 
 path {
   pointer-events: none;
   /* z-index: -1; */
 }
 
+hr {
+  opacity: 0.2;
+  /* margin-top: 110px; */
+  
+
+}
+
+code {
+  margin-bottom:50px;
+}
+
+#fullscreen-exit {
+  display: none;
+}
+
+.toolbar-edit p {
+  margin: 18px 0px 0px 21px;
+  float: left;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+.toolbar p {
+  /* display: inline; */
+  text-align: right;
+  width: 100%;
+  font-size: 0.9rem;
+  opacity: 0.5;
+  margin-right: 24px;
+}
+
+.preview-right-btns {
+  text-align: right;
+  width: 100%;
+  margin-right: 0px;
+}
+
 .window {
   background-color: #80c8bd;
   padding: 50px;
-  min-height: 100vh
+  min-height: 100vh;
 }
 
 #editor {
@@ -28,7 +80,7 @@ path {
   -moz-border-radius:0px 0px 10px 10px;
   -webkit-border-radius:0px 0px 10px 10px;
   padding: 10px 30px 0px 30px;
-  color: #52835e;
+  color: #727272;
   resize: none;
   -webkit-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
   -moz-box-shadow: -29px 28px 18px -25px rgba(0,0,0,0.27);
@@ -40,12 +92,8 @@ path {
 
 }
 
-/* .edit-holder {
-  display: relative;
-} */
-
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid rgb(202, 202, 202);
   border-collapse: collapse;
   margin-top: 10px;
   padding: 5px;
@@ -57,8 +105,13 @@ table, th, td {
   
 }
 
+.preview-holder {
+  position: relative;
+  /* height: 100vh; */
+}
+
 .preview-container {
-  /* display: relative; */
+  /* width: 40vw; */
   min-height: 40vh;
   max-height: calc(40vh);
   border: none;
@@ -83,6 +136,8 @@ table, th, td {
 
 .toolbar {
   /* position: absolute; */
+  display:flex;
+  justify-content: space-between;
   background-color: rgb(197, 253, 214);
   border-radius:10px 10px 0px 0px;
   -moz-border-radius:10px 0px 0px 0px;
@@ -95,8 +150,10 @@ table, th, td {
 }
 
 .toolbar-edit {
+  display:flex;
+  justify-content: space-between;
   height: 48px;
-  background-color: rgb(197, 253, 214);
+  background-color: rgb(219, 219, 219);
   border-radius:10px 10px 0px 0px;
   -moz-border-radius:10px 0px 0px 0px;
   -webkit-border-radius:10px 10px 0px 0px;
@@ -129,12 +186,14 @@ button {
   border-bottom: 2px solid rgb(218, 226, 226);
 }
  
+.credentials {
+  color: aliceblue;
+  font-size: 0.9rem;
+  margin-top: 400px;
+}
  
 
 @media only screen and (min-width: 1000px) {
-  /* .window {
-    background-color: lightblue;
-  } */
   .toolbar {
     margin: 0px;
     
@@ -166,9 +225,10 @@ button {
 
   .preview-container {
     /* margin-top: 0px; */
+    width: 40vw;
     max-height: calc(85vh - 48px);
     min-height: calc(85vh - 27px);
-    width: 40vw;
+
     padding: 0px 20px 20px 20px;
     
   }
