@@ -40,6 +40,10 @@ code {
   display: none;
 }
 
+#fullscreen-exit-edit {
+  display: none;
+}
+
 .toolbar-edit p {
   margin: 18px 0px 0px 21px;
   float: left;
@@ -188,7 +192,7 @@ button {
  
 .credentials {
   color: aliceblue;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   margin-top: 400px;
 }
  

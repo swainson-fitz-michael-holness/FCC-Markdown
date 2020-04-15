@@ -182,7 +182,7 @@ class App extends Component {
 
     // make corresponding window fullscreen
     enableFullscreen = (event) => {
-        // console.log(event.target.id)
+        console.log(event.target.id)
         if (event.target.id === 'fullscreen-preview') {
             document.getElementById('edit').style = 'display: none';
             document.getElementById('fullscreen-enter').style = 'display: none';
@@ -194,6 +194,16 @@ class App extends Component {
             document.getElementById('fullscreen-exit').style = 'display: none';
             document.getElementById('fullscreen-enter').style = 'display: inline';
             document.getElementById('edit').style = 'display: block';
+        } else if (event.target.id === 'fullscreen-editor') {
+            document.getElementById('previewer').style = 'display: none';
+            document.getElementById('fullscreen-enter-editor').style = 'display: none';
+            document.getElementById('fullscreen-exit-edit').style = 'display: inline;';
+            document.getElementById('editor').style = 'min-height: 80vh;';
+        } else if (event.target.id === 'fullscreen-exit-edit-btn') {
+            document.getElementById('editor').style = 'max-height: calc(40vh);';
+            document.getElementById('fullscreen-exit-edit').style = 'display: none';
+            document.getElementById('fullscreen-enter-editor').style = 'display: inline';
+            document.getElementById('previewer').style = 'display: block';
         }
 
     }
@@ -211,11 +221,11 @@ class App extends Component {
                         <div className='toolbar-edit'>
                             <p>Editor</p>
                             <div className='preview-right-btns'>
-                                <IconButton id='fullscreen-enter' onClick={this.enableFullscreen} aria-label="fullscreen">
-                                    <Fullscreen id='fullscreen-preview' />
+                                <IconButton id='fullscreen-enter-editor' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <Fullscreen id='fullscreen-editor' />
                                 </IconButton>
-                                <IconButton id='fullscreen-exit' onClick={this.enableFullscreen} aria-label="fullscreen">
-                                    <FullscreenExit id='fullscreen-exit-previewer' />
+                                <IconButton id='fullscreen-exit-edit' onClick={this.enableFullscreen} aria-label="fullscreen">
+                                    <FullscreenExit id='fullscreen-exit-edit-btn' />
                                 </IconButton>
                             </div>
                         </div>
@@ -231,7 +241,7 @@ class App extends Component {
 
 
 
-                    <div className='preview-holder'>
+                    <div id='previewer' className='preview-holder'>
                         <div className='toolbar'>
 
                             <IconButton onClick={this.enableMode} aria-label="bold">
